@@ -7,22 +7,22 @@
 %
 % The following facts are known about the reindeer and the elves who
 % rode them that day:
-% 1. Rudolf hangs out two or more areas to the eastof Wunorse Openslae’s reindeer.
+% 1. Rudolf hangs out two or more areas to the eastof Wunorse Openslaeï¿½s reindeer.
 % 2. The reindeer of the elf that made nine toys lives somewhere to the
-% west of Alabaster Snowball’s reindeer.
+% west of Alabaster Snowballï¿½s reindeer.
 % 3. Three reindeer in consecutive areas, from west to east, are Dasher,
-% Alabaster Snowball’s reindeer, and the reindeer of the elf that made
+% Alabaster Snowballï¿½s reindeer, and the reindeer of the elf that made
 % 12 toys.
 % 4. The elf who rode Rudolf has made three toys more than the
 % one who rode the reindeer in area 4, while Pepper Minstix made three
 % toys more than Sugarplum Mary. All four elves mentioned here are
 % unique.
-% 5. Comet’s rider made three toys more than Shinny Upatree, who
+% 5. Cometï¿½s rider made three toys more than Shinny Upatree, who
 % in turn made two toys more than the elf who rode Vixen. The elf who
 % rode Vixen is Shinny Upatree, Sugarplum Mary or Wunorse Onenslae.
-% 6. Blitzen lives somewhere to the west of Bushy Evergreen’s reindeer.
+% 6. Blitzen lives somewhere to the west of Bushy Evergreenï¿½s reindeer.
 % 7. Alabaster Snowball made exactly one toy more than Wunorse Openslae.
-% 8. Pepper Minstix didn’t ride the reindeer from area 6.
+% 8. Pepper Minstix didnï¿½t ride the reindeer from area 6.
 %
 %Created By: Arnold Gihzo and Joseph Menezes
 %Created on 2nd December 2020
@@ -54,7 +54,7 @@ solutions([["Dasher",_,_,_],
 % This rule is broken down into two section as the data provided is
 % unique.
 %
-% Comet’s rider made three toys more than Shinny Upatree, who in
+% Cometï¿½s rider made three toys more than Shinny Upatree, who in
 % turn made two toys more than the elf who rode Vixen. The elf who rode
 % Vixen is Shinny Upatree, Sugarplum Mary or Wunorse Onenslae.
 %
@@ -83,7 +83,16 @@ rule5A(Solution) :-
 %
 rule5B([_,_,["Vixen", "Sugaplum Mary",_,_],_,_,_]).
 rule5B([_,_,["Vixen", "Wunrose Oneslae",_,_],_,_,_]).
+%===========================================================
+% distributionAreasAndToys - it will put areas and toys into the Solutions
 
+distributionAreasAndToys([]).
+distributionAreasAndToys([[_,_,NumberToys,Area]|Rest]):-
+  toys(PossibleToys),
+  member(NumberToys, PossibleToys),
+  areas(PossibleAreas),
+  member(Area, PossibleAreas),
+  distributionAreasAndToys(Rest).
 %============================================================
 %solve - intiates the run of our program.
 %
@@ -91,5 +100,6 @@ rule5B([_,_,["Vixen", "Wunrose Oneslae",_,_],_,_,_]).
 %then runs list through the rules.
 %
 solve:-
-    solutions(X),
-    rule5(X).
+    solutions(Solution),
+    distributionAreasAndToys(Solution),
+    rule5(Solution).
