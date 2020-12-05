@@ -26,7 +26,7 @@
 %
 %Created By: Arnold Gihzo and Joseph Menezes
 %Created on 2nd December 2020
-%LastEdited on 02/12/2020 @ 8:45pm
+%LastEdited on 04/12/2020 @ 9:37pm
 %====================================================
 
 %======================================================
@@ -76,7 +76,7 @@ rule5(Solution) :-
     member([_,"Shinny Upatree", ShinnyToys,_], Solution),
     member(["Vixen",_,VixenToys,_], Solution),
     CometToys is ShinnyToys + 3,
-    ShinnyToys is VixenToys + 2.
+    CometToys is VixenToys + 5.
 
 %===========================================================
 % distributionAreasAndToys - it will put areas and toys into the Solutions
@@ -113,8 +113,8 @@ rule3(Solution):-
   member(["Dasher",_,_,AreaDasher], Solution),
   member([_,"Alabaster Snowball",_,AreaAlabaster], Solution),
   member([_,_,12,AreaToys], Solution),
-  AreaDasher is AreaAlabaster - 1,
-  AreaAlabaster is AreaToys - 1.
+  AreaAlabaster is AreaDasher + 1,
+  AreaToys is AreaDasher + 2.
 
 %===========================================================
 % rule7: Returns true if all possible values where Alabaster has made
@@ -187,18 +187,18 @@ uniqueElf([[_,A1,_,_],[_,A2,_,_],[_,A3,_,_],[_,A4,_,_],[_,A5,_,_],[_,A6,_,_]]):-
 solve(Solution):-
   solutions(Solution),
   distributionAreas(Solution),
+  uniqueAreas(Solution),
+  rule1(Solution),
+  rule8(Solution),
+  rule6(Solution),
+  rule5a(Solution),
   distributionToys(Solution),
   uniqueToys(Solution),
-  uniqueAreas(Solution),
-  rule5(Solution),
-  rule5a(Solution),
-  rule8(Solution),
-  rule1(Solution),
-  rule3(Solution),
   rule4(Solution),
-  rule2(Solution),
-  rule6(Solution),
   rule7(Solution),
+  rule3(Solution),
+  rule2(Solution),
+  rule5(Solution),
   uniqueElf(Solution).
 
 
