@@ -132,7 +132,7 @@ rule7(Solution):-
 rule1(Solution):-
   member(["Rudolf",_,_,AreaRudolf], Solution),
   member([_,"Wunrose Openslae", _,AreaOpenslae], Solution),
-  NewArea is AreaOpenslae - 2,
+  NewArea is AreaOpenslae + 2,
   AreaRudolf > NewArea.
 
 %===========================================================
