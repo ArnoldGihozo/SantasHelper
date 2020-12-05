@@ -35,15 +35,15 @@
 toys([15,14,12,10,9,7]).
 %reindeer(["Dasher", "Prancer", "Vixen", "Comet", "Blitzen","Rudolf"]).
 elves(["Alabaster Snowball", "Bushy Evergreen", "Pepper Minstrix","Shinny Upatree","Sugaplum Mary","Wunrose Openslae"]).
-areas([1, 2, 3, 4, 5 , 6]).
+areas([1, 2, 3, 4, 5 ,6]).
 
 %[reindeer, elver, No.Of Toys,areas]
-solutions([["Dasher",_,_,_],
+solutions([["Rudolf",_,_,_],
            ["Prancer",_,_,_],
            ["Vixen",_,_,_],
            ["Comet",_,_,_],
            ["Blitzen",_,_,_],
-           ["Rudlof",_,_,_]]).
+           ["Dasher",_,_,_]]).
 
 %=======================================================
 % Rules
@@ -93,13 +93,91 @@ distributionAreasAndToys([[_,_,NumberToys,Area]|Rest]):-
   areas(PossibleAreas),
   member(Area, PossibleAreas),
   distributionAreasAndToys(Rest).
+%===========================================================
+% rule8 :- Returns true for all possible values in which Peper Minstix did
+% not ride the reindeer in area 6
+
+
+rule8(Solution):-
+  member([_,"Pepper Minstrix",_,Area], Solution),
+  Area \= 6.
+  % Area \= 5,
+  % Area \= 4,
+  % Area \= 3,
+  % Area \= 1.
+
+%===========================================================
+%rule3 :- Returns true for all possible vakues in which Dasher
+% Albaster, Snowball's Reindeer, and the rein deer of the elf that
+% made 12 toys.
+
+rule3(Solution):-
+  member(["Dasher",_,_,AreaDasher], Solution),
+  member([_,"Alabaster Snowball",_,AreaAlabaster], Solution),
+  member([_,_,12,AreaToys], Solution),
+  AreaDasher is AreaAlabaster - 1,
+  AreaAlabaster is AreaToys - 1.
+
+%===========================================================
+% rule7: Returns true if all possible values where Alabaster has made
+% exactly one toy more than Wunorse Openslae
+
+rule7(Solution):-
+  member([_,"Alabaster Snowball",ToyAlabaster,_], Solution),
+  member([_,"Wunorse Openslae", ToyWunorse,_], Solution),
+  ToyAlabaster is ToyWunorse + 1.
+
+%===========================================================
+%rule1 : Returns true in all possible areas where Rudolf hangs out
+% two more areas to the east of Wunrose Openslae's Reindeer
+
+rule1(Solution):-
+  member(["Rudolf",_,_,AreaRudolf], Solution),
+  member([_,"Wunrose Openslae", _,AreaOpenslae], Solution),
+  NewArea is AreaOpenslae - 2,
+  AreaRudolf < NewArea.
+
+%===========================================================
+
+rule2(Solution):-
+  member([_,_,9,Areaof9], Solution),
+  member([_,"Alabaster Snowball",_,AreaAlabaster], Solution),
+  Areaof9 < AreaAlabaster.
+
+% rule4(Solution):-
+%   member(["Rudolf",ElfRudolf,ToysRudolf,AreaRudolf],Solution),
+%   member([Reindeer4,Elef4,NumberToys4,4], Solution),
+%   member([ReindeerMin,"Pepper Minstrix",NumToyMin,AreaMin], Solution),
+%   member([ReindeerMary,"Sugaplum Mary",NumToyMary,AreaMary],Solution),
+%   ToysRudolf is NumberToys + 3,
+%   NumToyMin is NumToyMary + 3,
+%   Reindeer4 \= ReindeerMin,
+%   ReindeerMin \= ReindeerMary,
+%   Reindeer4 \= ReindeerMary,
+
+rule6(Solution):-
+  member(["Blitzen",_,_,AreaBli], Solution),
+  member([_,"Bushy Evergreen",_,AreaBushy], Solution),
+  AreaBli < AreaBushy.
+
 %============================================================
 %solve - intiates the run of our program.
 %
 %retrieves solutions in the form of parameter X,
 %then runs list through the rules.
 %
-solve:-
-    solutions(Solution),
-    distributionAreasAndToys(Solution),
-    rule5(Solution).
+solve(Solution):-
+  solutions(Solution),
+  distributionAreasAndToys(Solution),
+  rule5(Solution),
+  rule3(Solution),
+  rule8(Solution),
+  rule7(Solution),
+  rule1(Solution),
+  rule2(Solution).
+  rule6(Solution).
+
+
+
+
+% consult('/Users/arnoldgihozo/Documents/GitHub/SantasHelper/santahelper.pl').
