@@ -96,13 +96,19 @@ distributionToys([[_,_,Toys,_]|Rest]):-
 % not ride the reindeer in area 6
 
 
+%===========================================================
+% rule8 :- Returns true for all possible values in which Peper Minstix did
+% not ride the reindeer in area 6
 rule8(Solution):-
   member([_,pm,_,Area], Solution),
-  Area \= 6.
-  % Area \= 5,
-  % Area \= 4,
-  % Area \= 3,
-  % Area \= 1.
+  checkArea(Area).
+
+checkArea(1).
+checkArea(2).
+checkArea(3).
+checkArea(4).
+checkArea(5).
+%checkArea(5). 
 
 %===========================================================
 %rule3 :- Returns true for all possible vakues in which Dasher
@@ -189,22 +195,36 @@ uniqueElf([[_,A1,_,_],[_,A2,_,_],[_,A3,_,_],[_,A4,_,_],[_,A5,_,_],[_,A6,_,_]]):-
 % the best possibility of truth, maybe above toys also needs to be ordered
 % in a way
 %
+% solve(Solution):-
+%   solutions(Solution),
+%   %rule5a(Solution),
+%   rule8(Solution),
+%   distributionAreas(Solution),
+%   rule6(Solution),
+%   rule1(Solution),
+%   uniqueAreas(Solution),
+%   distributionToys(Solution),
+%   rule7(Solution),
+%   rule4(Solution),
+%   rule5(Solution),
+%   rule2(Solution),
+%   rule3(Solution),
+%   uniqueToys(Solution).
 solve(Solution):-
   solutions(Solution),
-  %rule5a(Solution),
-  distributionAreas(Solution),
   rule8(Solution),
-  rule6(Solution),
-  rule1(Solution),
-  uniqueAreas(Solution),
   distributionToys(Solution),
   rule7(Solution),
   rule4(Solution),
   rule5(Solution),
-  rule2(Solution),
-  rule3(Solution),
   uniqueToys(Solution),
-  uniqueElf(Solution).
+  distributionAreas(Solution),
+  rule6(Solution),
+  rule2(Solution),
+  rule1(Solution),
+  rule3(Solution),
+  uniqueAreas(Solution).
+
 
 
 
