@@ -54,9 +54,9 @@ solutions([[rudolf,_,_,_],
 % Two possibilities
 %Solution -[[reindeer, elves, toys,areas],....]
 %
-rule5a([_,_,[vixen, su,_,_],_,_,_]).
-rule5a([_,_,[vixen, sm,_,_],_,_,_]).
-rule5a([_,_,[vixen, wo,_,_],_,_,_]).
+checkElf(su).
+checkElf(sm).
+checkElf(wo).
 
 %=========================================================
 % rule5(solutions) - I t will return true is conditions are met.
@@ -74,9 +74,10 @@ rule5a([_,_,[vixen, wo,_,_],_,_,_]).
 rule5(Solution) :-
     member([comet,_,CometToys,_], Solution),
     member([_,su, ShinnyToys,_], Solution),
-    member([vixen,_,VixenToys,_], Solution),
+    member([vixen,ElfVix ,VixenToys,_], Solution),
     CometToys is ShinnyToys + 3,
-    ShinnyToys is VixenToys + 2.
+    ShinnyToys is VixenToys + 2,
+    checkElf(ElfVix).
 %===========================================================
 % distributionAreasAndToys - it will put areas and toys into the Solutions
 
@@ -95,13 +96,19 @@ distributionToys([[_,_,Toys,_]|Rest]):-
 % not ride the reindeer in area 6
 
 
+%===========================================================
+% rule8 :- Returns true for all possible values in which Peper Minstix did
+% not ride the reindeer in area 6
 rule8(Solution):-
   member([_,pm,_,Area], Solution),
-  Area \= 6.
-  % Area \= 5,
-  % Area \= 4,
-  % Area \= 3,
-  % Area \= 1.
+  checkArea(Area).
+
+checkArea(1).
+checkArea(2).
+checkArea(3).
+checkArea(4).
+checkArea(5).
+%checkArea(5). 
 
 %===========================================================
 %rule3 :- Returns true for all possible vakues in which Dasher
@@ -131,8 +138,7 @@ rule7(Solution):-
 rule1(Solution):-
   member([rudolf,_,_,AreaRudolf], Solution),
   member([_,wo, _,AreaOpenslae], Solution),
-  AreaOpenslae < 4, % because if it is bigger, then you cannot have 2 differences
-  NewArea is AreaOpenslae + 2,
+  NewArea is AreaOpenslae + 1,
   AreaRudolf > NewArea.
 
 
@@ -189,22 +195,52 @@ uniqueElf([[_,A1,_,_],[_,A2,_,_],[_,A3,_,_],[_,A4,_,_],[_,A5,_,_],[_,A6,_,_]]):-
 % the best possibility of truth, maybe above toys also needs to be ordered
 % in a way
 %
-solve(Solution):-
+% solve(Solution):-
+%   solutions(Solution),
+%   %rule5a(Solution),
+%   rule8(Solution),
+%   distributionAreas(Solution),
+%   rule6(Solution),
+%   rule1(Solution),
+%   uniqueAreas(Solution),
+%   distributionToys(Solution),
+%   rule7(Solution),
+%   rule4(Solution),
+%   rule5(Solution),
+%   rule2(Solution),
+%   rule3(Solution),
+%   uniqueToys(Solution).
+
+solve:-
+    run(Solution),
+    printResult(Solution).
+
+run(Solution):-
   solutions(Solution),
-  rule5a(Solution),
-  distributionAreas(Solution).
-  %rule1(Solution),
-  %rule6(Solution),
-  %rule8(Solution),
-  %uniqueAreas(Solution),
-  %distributionToys(Solution),
-  %rule7(Solution),
-  %rule4(Solution),
-  %rule5(Solution),
-  %rule2(Solution),
-  %rule3(Solution),
-  %uniqueToys(Solution),
-  %uniqueElf(Solution).
+  rule8(Solution),
+  distributionToys(Solution),
+  rule7(Solution),
+  rule4(Solution),
+  rule5(Solution),
+  uniqueToys(Solution),
+  distributionAreas(Solution),
+  rule6(Solution),
+  rule2(Solution),
+  rule1(Solution),
+  rule3(Solution),
+  uniqueAreas(Solution).
+
+printResult(Solution):-
+    write('Area     Reindeer   Elf             Toys'),nl,
+    write('-----    ---------  -------------   ----'),nl,
+    showResult(Solution, 1).
+showResult(Solution, Area):-
+    member([Rein, Elf, NumToys, Area], Solution),
+    writef('%10l %15l %20l %5r ', [Area, Rein, Elf, NumToys]),nl,
+    NewArea is Area + 1,
+    showResult(Solution, NewArea).
+showResult(_,7).
+
 
 
 

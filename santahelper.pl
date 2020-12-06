@@ -45,6 +45,7 @@ solutions([[rudolf,_,_,_],
            [blitzen,_,_,_],
            [dasher,_,_,_]]).
 
+
 %=======================================================
 % Rules
 
@@ -210,7 +211,12 @@ uniqueElf([[_,A1,_,_],[_,A2,_,_],[_,A3,_,_],[_,A4,_,_],[_,A5,_,_],[_,A6,_,_]]):-
 %   rule2(Solution),
 %   rule3(Solution),
 %   uniqueToys(Solution).
-solve(Solution):-
+
+solve:-
+    run(Solution),
+    printResult(Solution).
+
+run(Solution):-
   solutions(Solution),
   rule8(Solution),
   distributionToys(Solution),
@@ -224,6 +230,17 @@ solve(Solution):-
   rule1(Solution),
   rule3(Solution),
   uniqueAreas(Solution).
+
+printResult(Solution):-
+    write('Area     Reindeer   Elf             Toys'),nl,
+    write('-----    ---------  -------------   ----'),nl,
+    showResult(Solution, 1).
+showResult(Solution, Area):-
+    member([Rein, Elf, NumToys, Area], Solution),
+    writef('%10l %8l %20l %5r ', [Area, Rein, Elf, NumToys]),nl,
+    NewArea is Area + 1,
+    showResult(Solution, NewArea).
+showResult(_,7).
 
 
 
