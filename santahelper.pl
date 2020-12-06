@@ -33,17 +33,17 @@
 %Facts
 %======================================================
 toys([15,14,12,10,9,7]).
-%reindeer(["Dasher", "Prancer", "Vixen", "Comet", "Blitzen","Rudolf"]).
-elves(["Alabaster Snowball", "Bushy Evergreen", "Pepper Minstrix","Shinny Upatree","Sugaplum Mary","Wunrose Openslae"]).
+%reindeer([dasher, prancer, vixen, comet, blitzen,rudolf]).
+elves([as, be, pm,su,sm,wo]).
 areas([1, 2, 3, 4, 5 ,6]).
 
 %[reindeer, elver, No.Of Toys,areas]
-solutions([["Rudolf",_,_,_],
-           ["Prancer",_,_,_],
-           ["Vixen",_,_,_],
-           ["Comet",_,_,_],
-           ["Blitzen",_,_,_],
-           ["Dasher",_,_,_]]).
+solutions([[rudolf,_,_,_],
+           [prancer,_,_,_],
+           [vixen,_,_,_],
+           [comet,_,_,_],
+           [blitzen,_,_,_],
+           [dasher,_,_,_]]).
 
 %=======================================================
 % Rules
@@ -54,9 +54,9 @@ solutions([["Rudolf",_,_,_],
 % Two possibilities
 %Solution -[[reindeer, elves, toys,areas],....]
 %
-rule5a([_,_,["Vixen", "Shinny Upatree",_,_],_,_,_]).
-rule5a([_,_,["Vixen", "Sugaplum Mary",_,_],_,_,_]).
-rule5a([_,_,["Vixen", "Wunrose Openslae",_,_],_,_,_]).
+rule5a([_,_,[vixen, su,_,_],_,_,_]).
+rule5a([_,_,[vixen, sm,_,_],_,_,_]).
+rule5a([_,_,[vixen, wo,_,_],_,_,_]).
 
 %=========================================================
 % rule5(solutions) - I t will return true is conditions are met.
@@ -72,9 +72,9 @@ rule5a([_,_,["Vixen", "Wunrose Openslae",_,_],_,_,_]).
 %
 %
 rule5(Solution) :-
-    member(["Comet",_,CometToys,_], Solution),
-    member([_,"Shinny Upatree", ShinnyToys,_], Solution),
-    member(["Vixen",_,VixenToys,_], Solution),
+    member([comet,_,CometToys,_], Solution),
+    member([_,su, ShinnyToys,_], Solution),
+    member([vixen,_,VixenToys,_], Solution),
     CometToys is ShinnyToys + 3,
     ShinnyToys is VixenToys + 2.
 %===========================================================
@@ -96,7 +96,7 @@ distributionToys([[_,_,Toys,_]|Rest]):-
 
 
 rule8(Solution):-
-  member([_,"Pepper Minstrix",_,Area], Solution),
+  member([_,pm,_,Area], Solution),
   Area \= 6.
   % Area \= 5,
   % Area \= 4,
@@ -109,8 +109,8 @@ rule8(Solution):-
 % made 12 toys.
 
 rule3(Solution):-
-  member(["Dasher",_,_,AreaDasher], Solution),
-  member([_,"Alabaster Snowball",_,AreaAlabaster], Solution),
+  member([dasher,_,_,AreaDasher], Solution),
+  member([_,as,_,AreaAlabaster], Solution),
   member([_,_,12,AreaToys], Solution),
   AreaAlabaster is AreaDasher + 1,
   AreaToys is AreaDasher + 2.
@@ -120,8 +120,8 @@ rule3(Solution):-
 % exactly one toy more than Wunorse Openslae
 
 rule7(Solution):-
-  member([_,"Alabaster Snowball",ToyAlabaster,_], Solution),
-  member([_,"Wunrose Openslae", ToyWunorse,_], Solution),
+  member([_,as,ToyAlabaster,_], Solution),
+  member([_,wo, ToyWunorse,_], Solution),
   ToyAlabaster is ToyWunorse + 1.
 
 %===========================================================
@@ -129,10 +129,9 @@ rule7(Solution):-
 % two more areas to the east of Wunrose Openslae's Reindeer
 
 rule1(Solution):-
-  member(["Rudolf",_,_,AreaRudolf], Solution),
-  member([_,"Wunrose Openslae", _,AreaOpenslae], Solution),
-  AreaOpenslae < 4, % because if it is bigger, then you cannot have 2 differences
-  NewArea is AreaOpenslae + 2,
+  member([rudolf,_,_,AreaRudolf], Solution),
+  member([_,wo, _,AreaOpenslae], Solution),
+  NewArea is AreaOpenslae + 1,
   AreaRudolf > NewArea.
 
 
@@ -140,7 +139,7 @@ rule1(Solution):-
 
 rule2(Solution):-
   member([_,_,9,Areaof9], Solution),
-  member([_,"Alabaster Snowball",_,AreaAlabaster], Solution),
+  member([_,as,_,AreaAlabaster], Solution),
   Areaof9 < AreaAlabaster. % this could be Dasher
 %===============================================================
 % The elf who rode Rudolf has made three toys more than the
@@ -148,16 +147,16 @@ rule2(Solution):-
 % toys more than Sugarplum Mary. All four elves mentioned here are
 % unique.
 rule4(Solution):-
-   member(["Rudolf",_,ToysRudolf,_],Solution),
+   member([rudolf,_,ToysRudolf,_],Solution),
    member([_,_,NumberToys4,4], Solution),
-   member([_,"Pepper Minstrix",NumToyMin,_], Solution),
-   member([_,"Sugaplum Mary",NumToyMary,_],Solution),
+   member([_,pm,NumToyMin,_], Solution),
+   member([_,sm,NumToyMary,_],Solution),
    ToysRudolf is NumberToys4 + 3,
-   NumToyMin is NumToyMary + 2.
+   NumToyMin is NumToyMary + 3.
 
 rule6(Solution):-
-  member(["Blitzen",_,_,AreaBli], Solution),
-  member([_,"Bushy Evergreen",_,AreaBushy], Solution),
+  member([blitzen,_,_,AreaBli], Solution),
+  member([_,be,_,AreaBushy], Solution),
   AreaBli < AreaBushy.
 
 %============================================================
@@ -193,18 +192,18 @@ solve(Solution):-
   solutions(Solution),
   rule5a(Solution),
   distributionAreas(Solution),
-  rule1(Solution),
-  rule6(Solution),
-  rule8(Solution),
-  uniqueAreas(Solution),
-  distributionToys(Solution),
-  rule7(Solution),
-  rule4(Solution),
-  rule5(Solution),
-  rule2(Solution),
-  rule3(Solution),
-  uniqueToys(Solution),
-  uniqueElf(Solution).
+  rule1(Solution).
+  %rule6(Solution),
+  %rule8(Solution),
+  %uniqueAreas(Solution),
+  %distributionToys(Solution),
+  %rule7(Solution),
+  %rule4(Solution),
+  %rule5(Solution),
+  %rule2(Solution),
+  %rule3(Solution),
+  %uniqueToys(Solution),
+  %uniqueElf(Solution).
 
 
 
