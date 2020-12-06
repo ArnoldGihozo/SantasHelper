@@ -49,7 +49,7 @@ solutions([["Rudolf",_,_,_],
 % Rules
 
 %===========================================================
-%rule5(Solution) :- Returns true for possible elves for vixen.
+%rule5a(Solution) :- Returns true for possible elves for vixen.
 %
 % Two possibilities
 %Solution -[[reindeer, elves, toys,areas],....]
@@ -76,8 +76,7 @@ rule5(Solution) :-
     member([_,"Shinny Upatree", ShinnyToys,_], Solution),
     member(["Vixen",_,VixenToys,_], Solution),
     CometToys is ShinnyToys + 3,
-    ShinnyToys is VixenToys + 3.
-
+    ShinnyToys is VixenToys + 2.
 %===========================================================
 % distributionAreasAndToys - it will put areas and toys into the Solutions
 
@@ -192,8 +191,8 @@ uniqueElf([[_,A1,_,_],[_,A2,_,_],[_,A3,_,_],[_,A4,_,_],[_,A5,_,_],[_,A6,_,_]]):-
 %
 solve(Solution):-
   solutions(Solution),
-  distributionAreas(Solution),
   rule5a(Solution),
+  distributionAreas(Solution),
   rule1(Solution),
   rule6(Solution),
   rule8(Solution),
