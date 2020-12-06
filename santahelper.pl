@@ -132,27 +132,29 @@ rule7(Solution):-
 rule1(Solution):-
   member(["Rudolf",_,_,AreaRudolf], Solution),
   member([_,"Wunrose Openslae", _,AreaOpenslae], Solution),
+  AreaOpenslae < 4, % because if it is bigger, then you cannot have 2 differences
   NewArea is AreaOpenslae + 2,
   AreaRudolf > NewArea.
+
 
 %===========================================================
 
 rule2(Solution):-
   member([_,_,9,Areaof9], Solution),
   member([_,"Alabaster Snowball",_,AreaAlabaster], Solution),
-  Areaof9 < AreaAlabaster.
+  Areaof9 < AreaAlabaster. % this could be Dasher
 %===============================================================
 % The elf who rode Rudolf has made three toys more than the
 % one who rode the reindeer in area 4, while Pepper Minstix made three
 % toys more than Sugarplum Mary. All four elves mentioned here are
 % unique.
 rule4(Solution):-
-  member(["Rudolf",_,ToysRudolf,_],Solution),
+   member(["Rudolf",_,ToysRudolf,_],Solution),
    member([_,_,NumberToys4,4], Solution),
    member([_,"Pepper Minstrix",NumToyMin,_], Solution),
    member([_,"Sugaplum Mary",NumToyMary,_],Solution),
    ToysRudolf is NumberToys4 + 3,
-   NumToyMin is NumToyMary + 3.
+   NumToyMin is NumToyMary + 2.
 
 rule6(Solution):-
   member(["Blitzen",_,_,AreaBli], Solution),
@@ -185,31 +187,27 @@ uniqueElf([[_,A1,_,_],[_,A2,_,_],[_,A3,_,_],[_,A4,_,_],[_,A5,_,_],[_,A6,_,_]]):-
 %then runs list through the rules.
 % hey Arnold look at the rules below unique toys they need to be
 % optimized, Their not ordered in a way that would give rule 5
-% the best possibility of truth, maybe above toys also needs to be ordered 
+% the best possibility of truth, maybe above toys also needs to be ordered
 % in a way
 %
 solve(Solution):-
   solutions(Solution),
   distributionAreas(Solution),
-  uniqueAreas(Solution),
-  rule1(Solution),
-  rule8(Solution),
-  rule6(Solution),
   rule5a(Solution),
+  rule1(Solution),
+  rule6(Solution),
+  rule8(Solution),
+  uniqueAreas(Solution),
   distributionToys(Solution),
-  uniqueToys(Solution),
-  rule4(Solution),
   rule7(Solution),
-  rule3(Solution),
-  rule2(Solution),
+  rule4(Solution),
   rule5(Solution),
+  rule2(Solution),
+  rule3(Solution),
+  uniqueToys(Solution),
   uniqueElf(Solution).
 
 
 
 
 % consult('/Users/arnoldgihozo/Documents/GitHub/SantasHelper/santahelper.pl').
-
-
-
-
