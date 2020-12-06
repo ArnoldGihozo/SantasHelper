@@ -33,31 +33,31 @@
 %Facts
 %======================================================
 toys([15,14,12,10,9,7]).
-%reindeer([dasher, prancer, vixen, comet, blitzen,rudolf]).
+%reindeer(["Dasher", "Prancer", "Vixen", "Comet", "Blitzen","Rudolf"]).
 elves([as, be, pm,su,sm,wo]).
 areas([1, 2, 3, 4, 5 ,6]).
 
 %[reindeer, elver, No.Of Toys,areas]
-solutions([[rudolf,_,_,_],
-           [prancer,_,_,_],
-           [vixen,_,_,_],
-           [comet,_,_,_],
-           [blitzen,_,_,_],
-           [dasher,_,_,_]]).
+solutions([["Rudolf",_,_,_],
+           ["Prancer",_,_,_],
+           ["Vixen",_,_,_],
+           ["Comet",_,_,_],
+           ["Blitzen",_,_,_],
+           ["Dasher",_,_,_]]).
 
 
 %=======================================================
 % Rules
 
 %===========================================================
-%rule5a(Solution) :- Returns true for possible elves for vixen.
+%rule5a(Solution) :- Returns true for possible elves for "Vixen".
 %
 % Two possibilities
 %Solution -[[reindeer, elves, toys,areas],....]
 %
-checkElf(su).
-checkElf(sm).
-checkElf(wo).
+checkElf("Shinny Upatree").
+checkElf("Sugarplum Mary").
+checkElf("Wunrose Openslae").
 
 %=========================================================
 % rule5(solutions) - I t will return true is conditions are met.
@@ -73,9 +73,9 @@ checkElf(wo).
 %
 %
 rule5(Solution) :-
-    member([comet,_,CometToys,_], Solution),
-    member([_,su, ShinnyToys,_], Solution),
-    member([vixen,ElfVix ,VixenToys,_], Solution),
+    member(["Comet",_,CometToys,_], Solution),
+    member([_,"Shinny Upatree", ShinnyToys,_], Solution),
+    member(["Vixen",ElfVix ,VixenToys,_], Solution),
     CometToys is ShinnyToys + 3,
     ShinnyToys is VixenToys + 2,
     checkElf(ElfVix).
@@ -92,16 +92,12 @@ distributionToys([[_,_,Toys,_]|Rest]):-
     toys(PossibleToys),
     member(Toys, PossibleToys),
     distributionToys(Rest).
-%===========================================================
-% rule8 :- Returns true for all possible values in which Peper Minstix did
-% not ride the reindeer in area 6
-
 
 %===========================================================
 % rule8 :- Returns true for all possible values in which Peper Minstix did
 % not ride the reindeer in area 6
 rule8(Solution):-
-  member([_,pm,_,Area], Solution),
+  member([_,"Pepper Minstix",_,Area], Solution),
   checkArea(Area).
 
 checkArea(1).
@@ -117,8 +113,8 @@ checkArea(5).
 % made 12 toys.
 
 rule3(Solution):-
-  member([dasher,_,_,AreaDasher], Solution),
-  member([_,as,_,AreaAlabaster], Solution),
+  member(["Dasher",_,_,AreaDasher], Solution),
+  member([_,"Alabaster Snowball",_,AreaAlabaster], Solution),
   member([_,_,12,AreaToys], Solution),
   AreaAlabaster is AreaDasher + 1,
   AreaToys is AreaDasher + 2.
@@ -128,8 +124,8 @@ rule3(Solution):-
 % exactly one toy more than Wunorse Openslae
 
 rule7(Solution):-
-  member([_,as,ToyAlabaster,_], Solution),
-  member([_,wo, ToyWunorse,_], Solution),
+  member([_,"Alabaster Snowball",ToyAlabaster,_], Solution),
+  member([_,"Wunrose Openslae", ToyWunorse,_], Solution),
   ToyAlabaster is ToyWunorse + 1.
 
 %===========================================================
@@ -137,8 +133,8 @@ rule7(Solution):-
 % two more areas to the east of Wunrose Openslae's Reindeer
 
 rule1(Solution):-
-  member([rudolf,_,_,AreaRudolf], Solution),
-  member([_,wo, _,AreaOpenslae], Solution),
+  member(["Rudolf",_,_,AreaRudolf], Solution),
+  member([_,"Wunrose Openslae", _,AreaOpenslae], Solution),
   NewArea is AreaOpenslae + 1,
   AreaRudolf > NewArea.
 
@@ -147,7 +143,7 @@ rule1(Solution):-
 
 rule2(Solution):-
   member([_,_,9,Areaof9], Solution),
-  member([_,as,_,AreaAlabaster], Solution),
+  member([_,"Alabaster Snowball",_,AreaAlabaster], Solution),
   Areaof9 < AreaAlabaster. % this could be Dasher
 %===============================================================
 % The elf who rode Rudolf has made three toys more than the
@@ -155,16 +151,16 @@ rule2(Solution):-
 % toys more than Sugarplum Mary. All four elves mentioned here are
 % unique.
 rule4(Solution):-
-   member([rudolf,_,ToysRudolf,_],Solution),
+   member(["Rudolf",_,ToysRudolf,_],Solution),
    member([_,_,NumberToys4,4], Solution),
-   member([_,pm,NumToyMin,_], Solution),
-   member([_,sm,NumToyMary,_],Solution),
+   member([_,"Pepper Minstix",NumToyMin,_], Solution),
+   member([_,"Sugarplum Mary",NumToyMary,_],Solution),
    ToysRudolf is NumberToys4 + 3,
    NumToyMin is NumToyMary + 3.
 
 rule6(Solution):-
-  member([blitzen,_,_,AreaBli], Solution),
-  member([_,be,_,AreaBushy], Solution),
+  member(["Blitzen",_,_,AreaBli], Solution),
+  member([_,"Bushy Evergreen",_,AreaBushy], Solution),
   AreaBli < AreaBushy.
 
 %============================================================
@@ -213,6 +209,8 @@ uniqueElf([[_,A1,_,_],[_,A2,_,_],[_,A3,_,_],[_,A4,_,_],[_,A5,_,_],[_,A6,_,_]]):-
 %   uniqueToys(Solution).
 
 solve:-
+    write('Area     Reindeer   Elf                    Toys'),nl,
+    write('-----    ---------  -------------     ---------'),nl,
     run(Solution),
     printResult(Solution).
 
@@ -232,12 +230,10 @@ run(Solution):-
   uniqueAreas(Solution).
 
 printResult(Solution):-
-    write('Area     Reindeer   Elf             Toys'),nl,
-    write('-----    ---------  -------------   ----'),nl,
     showResult(Solution, 1).
 showResult(Solution, Area):-
     member([Rein, Elf, NumToys, Area], Solution),
-    writef('%10l %8l %20l %5r ', [Area, Rein, Elf, NumToys]),nl,
+    writef('%8l %10l %20l %5r ', [Area, Rein, Elf, NumToys]),nl,
     NewArea is Area + 1,
     showResult(Solution, NewArea).
 showResult(_,7).
