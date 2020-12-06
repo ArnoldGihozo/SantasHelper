@@ -54,9 +54,9 @@ solutions([[rudolf,_,_,_],
 % Two possibilities
 %Solution -[[reindeer, elves, toys,areas],....]
 %
-rule5a([_,_,[vixen, su,_,_],_,_,_]).
-rule5a([_,_,[vixen, sm,_,_],_,_,_]).
-rule5a([_,_,[vixen, wo,_,_],_,_,_]).
+checkElf(su).
+checkElf(sm).
+checkElf(wo).
 
 %=========================================================
 % rule5(solutions) - I t will return true is conditions are met.
@@ -74,9 +74,10 @@ rule5a([_,_,[vixen, wo,_,_],_,_,_]).
 rule5(Solution) :-
     member([comet,_,CometToys,_], Solution),
     member([_,su, ShinnyToys,_], Solution),
-    member([vixen,_,VixenToys,_], Solution),
+    member([vixen,ElfVix ,VixenToys,_], Solution),
     CometToys is ShinnyToys + 3,
-    ShinnyToys is VixenToys + 2.
+    ShinnyToys is VixenToys + 2,
+    checkElf(ElfVix).
 %===========================================================
 % distributionAreasAndToys - it will put areas and toys into the Solutions
 
@@ -190,20 +191,20 @@ uniqueElf([[_,A1,_,_],[_,A2,_,_],[_,A3,_,_],[_,A4,_,_],[_,A5,_,_],[_,A6,_,_]]):-
 %
 solve(Solution):-
   solutions(Solution),
-  rule5a(Solution),
+  %rule5a(Solution),
   distributionAreas(Solution),
-  rule1(Solution).
-  %rule6(Solution),
-  %rule8(Solution),
-  %uniqueAreas(Solution),
-  %distributionToys(Solution),
-  %rule7(Solution),
-  %rule4(Solution),
-  %rule5(Solution),
-  %rule2(Solution),
-  %rule3(Solution),
-  %uniqueToys(Solution),
-  %uniqueElf(Solution).
+  rule8(Solution),
+  rule6(Solution),
+  rule1(Solution),
+  uniqueAreas(Solution),
+  distributionToys(Solution),
+  rule7(Solution),
+  rule4(Solution),
+  rule5(Solution),
+  rule2(Solution),
+  rule3(Solution),
+  uniqueToys(Solution),
+  uniqueElf(Solution).
 
 
 
