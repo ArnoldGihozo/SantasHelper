@@ -70,14 +70,23 @@ checkElf("Wunrose Openslae").
 %
 % Solution - [[reindeer,Elves, Toys, areas],....]
 %
-%
 rule5(Solution) :-
     member(["Comet",_,CometToys,_], Solution),
     member([_,"Shinny Upatree", ShinnyToys,_], Solution),
     member(["Vixen",ElfVix ,VixenToys,_], Solution),
-    CometToys is ShinnyToys + 3,
-    ShinnyToys is VixenToys + 2,
+    CometToys = 15,
+    ShinnyToys = 12,
+    VixenToys = 10,
     checkElf(ElfVix).
+rule5(Solution) :-
+    member(["Comet",_,CometToys,_], Solution),
+    member([_,"Shinny Upatree", ShinnyToys,_], Solution),
+    member(["Vixen",ElfVix ,VixenToys,_], Solution),
+    CometToys = 12,
+    ShinnyToys = 9,
+    VixenToys = 7,
+    checkElf(ElfVix).
+
 %===========================================================
 % distributionAreas - it will put areas into the Solutions
 %
@@ -138,11 +147,18 @@ rule3(Solution):-
 rule7(Solution):-
   member([_,"Alabaster Snowball",ToyAlabaster,_], Solution),
   member([_,"Wunrose Openslae", ToyWunorse,_], Solution),
-  ToyAlabaster is ToyWunorse + 1.
+  ToyWunorse = 14,
+  ToyAlabaster = 15.
+rule7(Solution):-
+  member([_,"Alabaster Snowball",ToyAlabaster,_], Solution),
+  member([_,"Wunrose Openslae", ToyWunorse,_], Solution),
+  ToyWunorse = 9,
+  ToyAlabaster = 10.
+
 
 %===========================================================
 % rule1(Solution): Returns true in all possible areas where Rudolf hangs
-% out two more areas to the east of Wunrose Openslae's Reindeer
+% out two or more areas to the east of Wunrose Openslae's Reindeer
 %
 % Solution - [[reindeer,elf,toys,area],.....]
 rule1(Solution):-
@@ -150,6 +166,7 @@ rule1(Solution):-
   member([_,"Wunrose Openslae", _,AreaOpenslae], Solution),
   NewArea is AreaOpenslae + 1,
   AreaRudolf > NewArea.
+
 
 
 %===========================================================
@@ -175,8 +192,34 @@ rule4(Solution):-
    member([_,_,NumberToys4,4], Solution),
    member([_,"Pepper Minstix",NumToyMin,_], Solution),
    member([_,"Sugarplum Mary",NumToyMary,_],Solution),
-   ToysRudolf is NumberToys4 + 3,
-   NumToyMin is NumToyMary + 3.
+   ToysRudolf = 15,
+   NumberToys4 = 12,
+   checkMinMar(NumToyMin, NumToyMary).
+rule4(Solution):-
+   member(["Rudolf",_,ToysRudolf,_],Solution),
+   member([_,_,NumberToys4,4], Solution),
+   member([_,"Pepper Minstix",NumToyMin,_], Solution),
+   member([_,"Sugarplum Mary",NumToyMary,_],Solution),
+   ToysRudolf = 10,
+   NumberToys4 = 7,
+   checkMinMar(NumToyMin, NumToyMary).
+rule4(Solution):-
+   member(["Rudolf",_,ToysRudolf,_],Solution),
+   member([_,_,NumberToys4,4], Solution),
+   member([_,"Pepper Minstix",NumToyMin,_], Solution),
+   member([_,"Sugarplum Mary",NumToyMary,_],Solution),
+   ToysRudolf = 12,
+   NumberToys4 = 9,
+   checkMinMar(NumToyMin, NumToyMary).
+
+%======================================================================
+%checkMinMar(NumToyMin, NumToyMary)- returns true if values are equal to
+%15, 12
+%12, 9
+%10,7
+checkMinMar(15, 12).
+checkMinMar(12, 9).
+checkMinMar(10, 7).
 %=======================================================================
 %rule6(Solution) - returns true if blitzen is less than bushyEvergreen
 %
