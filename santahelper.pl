@@ -26,7 +26,7 @@
 %
 %Created By: Arnold Gihzo and Joseph Menezes
 %Created on 2nd December 2020
-%LastEdited on 06/12/2020 @ 9:37pm
+%LastEdited on 04/12/2020 @ 9:37pm
 %====================================================
 
 %======================================================
@@ -34,7 +34,7 @@
 %======================================================
 toys([15,14,12,10,9,7]).
 %reindeer(["Dasher", "Prancer", "Vixen", "Comet", "Blitzen","Rudolf"]).
-%elves([as, be, pm,su,sm,wo]).
+elves([as, be, pm,su,sm,wo]).
 areas([1, 2, 3, 4, 5 ,6]).
 
 %[reindeer, elver, No.Of Toys,areas]
@@ -50,11 +50,12 @@ solutions([["Rudolf",_,_,_],
 % Rules
 
 %===========================================================
-%checkElf(PossibleElf) :- Returns true for possible elves for "Vixen".
+%rule5a(Solution) :- Returns true for possible elves for "Vixen".
 %
 % Two possibilities
-% Solution -[[reindeer, elves, toys,areas],....]
+%Solution -[[reindeer, elves, toys,areas],....]
 %
+checkElf("Shinny Upatree").
 checkElf("Sugarplum Mary").
 checkElf("Wunrose Openslae").
 
@@ -70,34 +71,22 @@ checkElf("Wunrose Openslae").
 %
 % Solution - [[reindeer,Elves, Toys, areas],....]
 %
-rule5(Solution) :-
-    member(["Comet",_,CometToys,_], Solution),
-    member([_,"Shinny Upatree", ShinnyToys,_], Solution),
-    member(["Vixen",ElfVix ,VixenToys,_], Solution),
-    CometToys = 15,
-    ShinnyToys = 12,
-    VixenToys = 10,
-    checkElf(ElfVix).
-rule5(Solution) :-
-    member(["Comet",_,CometToys,_], Solution),
-    member([_,"Shinny Upatree", ShinnyToys,_], Solution),
-    member(["Vixen",ElfVix ,VixenToys,_], Solution),
-    CometToys = 12,
-    ShinnyToys = 9,
-    VixenToys = 7,
-    checkElf(ElfVix).
-
-%===========================================================
-% distributionAreas - it will put areas into the Solutions
 %
+rule5(Solution) :-
+    member(["Comet",_,CometToys,_], Solution),
+    member([_,"Shinny Upatree", ShinnyToys,_], Solution),
+    member(["Vixen",ElfVix ,VixenToys,_], Solution),
+    CometToys is ShinnyToys + 3,
+    ShinnyToys is VixenToys + 2,
+    checkElf(ElfVix).
+%===========================================================
+% distributionAreasAndToys - it will put areas and toys into the Solutions
+
 distributionAreas([]).
 distributionAreas([[_,_,_,Area]|Rest]):-
   areas(PossibleAreas),
   member(Area, PossibleAreas),
   distributionAreas(Rest).
-%=====================================================================
-%diatributionToys - It will put toys into the solutions.
-%
 distributionToys([]).
 distributionToys([[_,_,Toys,_]|Rest]):-
     toys(PossibleToys),
@@ -105,40 +94,20 @@ distributionToys([[_,_,Toys,_]|Rest]):-
     distributionToys(Rest).
 
 %===========================================================
-% rule8(Solution):- Returns true for all possible values in which Peper
-% Minstix did not ride the reindeer in area 6
-%
-% Solution - [[reindeer,elf,toys,area],........]
-%
+% rule8 :- Returns true for all possible values in which Peper Minstix did
+% not ride the reindeer in area 6
 rule8(Solution):-
   member([_,"Pepper Minstix",_,Area], Solution),
   checkArea(Area).
 
-%=======================================================================
-%checkArea(Possible Area) - assigns areas that are not 6
-%
 checkArea(1).
 checkArea(2).
 checkArea(3).
 checkArea(4).
 checkArea(5).
-%checkArea(5).
+%checkArea(5). 
 
 %===========================================================
-<<<<<<< Updated upstream
-% rule3(Solution) :- Returns true for all possible vakues in which
-% Dasher Albaster, Snowball's Reindeer, and the rein deer of the elf
-% that made 12 toys.
-%
-% Solution - [[reindeer,elf,toys,area],.....]
-%
-rule3(Solution):-
-  member(["Dasher",_,_,AreaDasher], Solution),
-  member([_,"Alabaster Snowball",_,AreaAlabaster], Solution),
-  member([_,_,12,AreaToys], Solution),
-  AreaAlabaster is AreaDasher + 1,
-  AreaToys is AreaDasher + 2.
-=======
 %rule3 :- Returns true for all possible vakues in which Dasher
 % Albaster, Snowball's Reindeer, and the rein deer of the elf that
 % made 12 toys.
@@ -151,31 +120,20 @@ rule3([["Dasher",_,_,AreaDasher],[_,"Alabaster Snowball",_,AreaDasher + 1],
 %   member(["Dasher",_,_,AreaDasher], Solution),
 %   member([_,"Alabaster Snowball",_,AreaDasher +1], Solution),
 %   member([_,_,12,AreaDasher + 2], Solution).
->>>>>>> Stashed changes
 
 %===========================================================
-% rule7(Solution): Returns true if all possible values where Alabaster
-% has made exactly one toy more than Wunorse Openslae
-%
-% Solution - [[reindeer, elf, toys,area],.......]
-%
+% rule7: Returns true if all possible values where Alabaster has made
+% exactly one toy more than Wunorse Openslae
+
 rule7(Solution):-
   member([_,"Alabaster Snowball",ToyAlabaster,_], Solution),
   member([_,"Wunrose Openslae", ToyWunorse,_], Solution),
-  ToyWunorse = 14,
-  ToyAlabaster = 15.
-rule7(Solution):-
-  member([_,"Alabaster Snowball",ToyAlabaster,_], Solution),
-  member([_,"Wunrose Openslae", ToyWunorse,_], Solution),
-  ToyWunorse = 9,
-  ToyAlabaster = 10.
-
+  ToyAlabaster is ToyWunorse + 1.
 
 %===========================================================
-% rule1(Solution): Returns true in all possible areas where Rudolf hangs
-% out two or more areas to the east of Wunrose Openslae's Reindeer
-%
-% Solution - [[reindeer,elf,toys,area],.....]
+%rule1 : Returns true in all possible areas where Rudolf hangs out
+% two more areas to the east of Wunrose Openslae's Reindeer
+
 rule1(Solution):-
   member(["Rudolf",_,_,AreaRudolf], Solution),
   member([_,"Wunrose Openslae", _,AreaOpenslae], Solution),
@@ -183,63 +141,24 @@ rule1(Solution):-
   AreaRudolf > NewArea.
 
 
-
 %===========================================================
-% rule2(Solution) - returns true where the area of the elf that made 9
-% toys is less than the area of alabaster.
-%
-% Solution - [[reindeer, elf, toys, area],.....]
+
 rule2(Solution):-
   member([_,_,9,Areaof9], Solution),
   member([_,"Alabaster Snowball",_,AreaAlabaster], Solution),
   Areaof9 < AreaAlabaster. % this could be Dasher
 %===============================================================
-%rule4(Solution) - returns true for the following rule:
-%
 % The elf who rode Rudolf has made three toys more than the
 % one who rode the reindeer in area 4, while Pepper Minstix made three
 % toys more than Sugarplum Mary. All four elves mentioned here are
 % unique.
-% Solution - [[reindeer, elf, toys, area],.....]
-
 rule4(Solution):-
    member(["Rudolf",_,ToysRudolf,_],Solution),
    member([_,_,NumberToys4,4], Solution),
    member([_,"Pepper Minstix",NumToyMin,_], Solution),
    member([_,"Sugarplum Mary",NumToyMary,_],Solution),
-   ToysRudolf = 15,
-   NumberToys4 = 12,
-   checkMinMar(NumToyMin, NumToyMary).
-rule4(Solution):-
-   member(["Rudolf",_,ToysRudolf,_],Solution),
-   member([_,_,NumberToys4,4], Solution),
-   member([_,"Pepper Minstix",NumToyMin,_], Solution),
-   member([_,"Sugarplum Mary",NumToyMary,_],Solution),
-   ToysRudolf = 10,
-   NumberToys4 = 7,
-   checkMinMar(NumToyMin, NumToyMary).
-rule4(Solution):-
-   member(["Rudolf",_,ToysRudolf,_],Solution),
-   member([_,_,NumberToys4,4], Solution),
-   member([_,"Pepper Minstix",NumToyMin,_], Solution),
-   member([_,"Sugarplum Mary",NumToyMary,_],Solution),
-   ToysRudolf = 12,
-   NumberToys4 = 9,
-   checkMinMar(NumToyMin, NumToyMary).
-
-%======================================================================
-%checkMinMar(NumToyMin, NumToyMary)- returns true if values are equal to
-%15, 12
-%12, 9
-%10,7
-checkMinMar(15, 12).
-checkMinMar(12, 9).
-checkMinMar(10, 7).
-%=======================================================================
-%rule6(Solution) - returns true if blitzen is less than bushyEvergreen
-%
-%
-% Solution - [[reindeer, elf, toys, area],.....]
+   ToysRudolf is NumberToys4 + 3,
+   NumToyMin is NumToyMary + 3.
 
 rule6(Solution):-
   member(["Blitzen",_,_,AreaBli], Solution),
@@ -247,75 +166,77 @@ rule6(Solution):-
   AreaBli < AreaBushy.
 
 %============================================================
-%noDuplicates(dupList) - returns true if there are no duplicates.
-%
-%dupList - a list of all areas or toys.
+%uniqueness
 noDuplicates([]).
 noDuplicates([First | Rest]):-
     not(member(First, Rest)),
     noDuplicates(Rest).
 
-%=======================================================================
-%uniqueToys(Solution) - checks to see if all toys in Solution are unique
-%
-% Solution - [[reindeer, elf, toys, area],.....]
 uniqueToys([[_,_,T1,_],[_,_,T2,_],[_,_,T3,_],[_,_,T4,_],[_,_,T5,_],[_,_,T6,_]]):-
     noDuplicates([T1,T2,T3,T4,T5,T6]).
 
-%=======================================================================
-% uniqueAreas(Solution) - checks to see if all areas in Solution are
-% unique
-%
-% Solution - [[reindeer, elf, toys, area],.....]
+
 uniqueAreas([[_,_,_,A1],[_,_,_,A2],[_,_,_,A3],[_,_,_,A4],[_,_,_,A5],[_,_,_,A6]]):-
     noDuplicates([A1,A2,A3,A4,A5,A6]).
+
+uniqueElf([[_,A1,_,_],[_,A2,_,_],[_,A3,_,_],[_,A4,_,_],[_,A5,_,_],[_,A6,_,_]]):-
+    noDuplicates([A1,A2,A3,A4,A5,A6]).
+
 
 
 %============================================================
 %solve - intiates the run of our program.
-% and outputs the solution
+%
+%retrieves solutions in the form of parameter X,
+%then runs list through the rules.
+% hey Arnold look at the rules below unique toys they need to be
+% optimized, Their not ordered in a way that would give rule 5
+% the best possibility of truth, maybe above toys also needs to be ordered
+% in a way
+%
+% solve(Solution):-
+%   solutions(Solution),
+%   %rule5a(Solution),
+%   rule8(Solution),
+%   distributionAreas(Solution),
+%   rule6(Solution),
+%   rule1(Solution),
+%   uniqueAreas(Solution),
+%   distributionToys(Solution),
+%   rule7(Solution),
+%   rule4(Solution),
+%   rule5(Solution),
+%   rule2(Solution),
+%   rule3(Solution),
+%   uniqueToys(Solution).
+
 solve:-
     write('Area     Reindeer   Elf                    Toys'),nl,
     write('-----    ---------  -------------     ---------'),nl,
     run(Solution),
-    showResult(Solution, 1).
+    printResult(Solution).
 
-%===============================================================
-%run(Solution) - returns true if all rules are true
-%
-% To figure out the understanding of the concept of backtracking we had
-% a discussion with Harshil, who helped in clarifying why each step
-% requires an order.
-%
-%
-%Solution - [[reindeer, elf, toys, area],.........]
-%
 run(Solution):-
   solutions(Solution),
   rule8(Solution),
   distributionToys(Solution),
+
+  % rule3(Solution)
+
   rule7(Solution),
   rule4(Solution),
   rule5(Solution),
   uniqueToys(Solution),
   distributionAreas(Solution),
-<<<<<<< Updated upstream
-=======
   rule3(Solution),
->>>>>>> Stashed changes
   rule6(Solution),
   rule2(Solution),
   rule1(Solution),
-  rule3(Solution),
+
   uniqueAreas(Solution).
-%========================================================
-%showResult(Solution, Area) - returns formatted output of our results.
-%
-%baseCase is when area is 7 we return the rest of our list.
-%
-%Solution - [[reindeer, elf, toys, area],.........]
-%Area - The intial start to retrieve our area. (1 - 6)
-%
+
+printResult(Solution):-
+    showResult(Solution, 1).
 showResult(Solution, Area):-
     member([Rein, Elf, NumToys, Area], Solution),
     writef('%8l %10l %20l %5r ', [Area, Rein, Elf, NumToys]),nl,
