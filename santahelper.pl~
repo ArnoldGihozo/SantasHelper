@@ -26,7 +26,7 @@
 %
 %Created By: Arnold Gihzo and Joseph Menezes
 %Created on 2nd December 2020
-%LastEdited on 04/12/2020 @ 9:37pm
+%LastEdited on 06/12/2020 @ 9:37pm
 %====================================================
 
 %======================================================
@@ -34,7 +34,7 @@
 %======================================================
 toys([15,14,12,10,9,7]).
 %reindeer(["Dasher", "Prancer", "Vixen", "Comet", "Blitzen","Rudolf"]).
-elves([as, be, pm,su,sm,wo]).
+%elves([as, be, pm,su,sm,wo]).
 areas([1, 2, 3, 4, 5 ,6]).
 
 %[reindeer, elver, No.Of Toys,areas]
@@ -50,12 +50,11 @@ solutions([["Rudolf",_,_,_],
 % Rules
 
 %===========================================================
-%rule5a(Solution) :- Returns true for possible elves for "Vixen".
+%checkElf(PossibleElf) :- Returns true for possible elves for "Vixen".
 %
 % Two possibilities
 %Solution -[[reindeer, elves, toys,areas],....]
 %
-checkElf("Shinny Upatree").
 checkElf("Sugarplum Mary").
 checkElf("Wunrose Openslae").
 
@@ -80,13 +79,16 @@ rule5(Solution) :-
     ShinnyToys is VixenToys + 2,
     checkElf(ElfVix).
 %===========================================================
-% distributionAreasAndToys - it will put areas and toys into the Solutions
+% distributionAreas - it will put areas into the Solutions
 
 distributionAreas([]).
 distributionAreas([[_,_,_,Area]|Rest]):-
   areas(PossibleAreas),
   member(Area, PossibleAreas),
   distributionAreas(Rest).
+%=====================================================================
+%diatributionToys - It will put toys into the solutions.
+%
 distributionToys([]).
 distributionToys([[_,_,Toys,_]|Rest]):-
     toys(PossibleToys),
@@ -209,6 +211,8 @@ uniqueElf([[_,A1,_,_],[_,A2,_,_],[_,A3,_,_],[_,A4,_,_],[_,A5,_,_],[_,A6,_,_]]):-
 %   uniqueToys(Solution).
 
 solve:-
+    write('Area     Reindeer   Elf                    Toys'),nl,
+    write('-----    ---------  -------------     ---------'),nl,
     run(Solution),
     printResult(Solution).
 
@@ -228,8 +232,6 @@ run(Solution):-
   uniqueAreas(Solution).
 
 printResult(Solution):-
-    write('Area     Reindeer   Elf                    Toys'),nl,
-    write('-----    ---------  -------------     ---------'),nl,
     showResult(Solution, 1).
 showResult(Solution, Area):-
     member([Rein, Elf, NumToys, Area], Solution),
