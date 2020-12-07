@@ -125,6 +125,7 @@ checkArea(5).
 %checkArea(5).
 
 %===========================================================
+<<<<<<< Updated upstream
 % rule3(Solution) :- Returns true for all possible vakues in which
 % Dasher Albaster, Snowball's Reindeer, and the rein deer of the elf
 % that made 12 toys.
@@ -137,6 +138,20 @@ rule3(Solution):-
   member([_,_,12,AreaToys], Solution),
   AreaAlabaster is AreaDasher + 1,
   AreaToys is AreaDasher + 2.
+=======
+%rule3 :- Returns true for all possible vakues in which Dasher
+% Albaster, Snowball's Reindeer, and the rein deer of the elf that
+% made 12 toys.
+
+rule3([["Dasher",_,_,AreaDasher],[_,"Alabaster Snowball",_,AreaDasher + 1],
+     [_,_,12,AreaDasher + 2]]).
+
+
+% rule3(Solution):-
+%   member(["Dasher",_,_,AreaDasher], Solution),
+%   member([_,"Alabaster Snowball",_,AreaDasher +1], Solution),
+%   member([_,_,12,AreaDasher + 2], Solution).
+>>>>>>> Stashed changes
 
 %===========================================================
 % rule7(Solution): Returns true if all possible values where Alabaster
@@ -284,6 +299,10 @@ run(Solution):-
   rule5(Solution),
   uniqueToys(Solution),
   distributionAreas(Solution),
+<<<<<<< Updated upstream
+=======
+  rule3(Solution),
+>>>>>>> Stashed changes
   rule6(Solution),
   rule2(Solution),
   rule1(Solution),
