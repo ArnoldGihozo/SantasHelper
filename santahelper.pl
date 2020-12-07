@@ -112,12 +112,12 @@ checkArea(5).
 % Albaster, Snowball's Reindeer, and the rein deer of the elf that
 % made 12 toys.
 
-rule3(Solution):-
-  member(["Dasher",_,_,AreaDasher], Solution),
-  member([_,"Alabaster Snowball",_,AreaAlabaster], Solution),
-  member([_,_,12,AreaToys], Solution),
-  AreaAlabaster is AreaDasher + 1,
-  AreaToys is AreaDasher + 2.
+rule3([["Dasher",_,_,AreaDasher],[_,"Alabaster Snowball",_,AreaDasher + 1],
+      [_,_,12,AreaDasher + 2]]).
+% rule3(Solution):-
+%   member(["Dasher",_,_,AreaDasher], Solution),
+%   member([_,"Alabaster Snowball",_,AreaDasher +1], Solution),
+%   member([_,_,12,AreaDasher + 2], Solution).
 
 %===========================================================
 % rule7: Returns true if all possible values where Alabaster has made
@@ -218,15 +218,19 @@ run(Solution):-
   solutions(Solution),
   rule8(Solution),
   distributionToys(Solution),
+
+  % rule3(Solution)
+
   rule7(Solution),
   rule4(Solution),
   rule5(Solution),
   uniqueToys(Solution),
   distributionAreas(Solution),
+  %rule3(Solution),
   rule6(Solution),
   rule2(Solution),
   rule1(Solution),
-  rule3(Solution),
+
   uniqueAreas(Solution).
 
 printResult(Solution):-
