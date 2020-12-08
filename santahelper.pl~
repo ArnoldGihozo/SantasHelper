@@ -105,19 +105,18 @@ checkArea(2).
 checkArea(3).
 checkArea(4).
 checkArea(5).
-%checkArea(5). 
+%checkArea(5).
 
 %===========================================================
 %rule3 :- Returns true for all possible vakues in which Dasher
 % Albaster, Snowball's Reindeer, and the rein deer of the elf that
 % made 12 toys.
 
-rule3(Solution):-
-  member(["Dasher",_,_,AreaDasher], Solution),
-  member([_,"Alabaster Snowball",_,AreaAlabaster], Solution),
-  member([_,_,12,AreaToys], Solution),
-  AreaAlabaster is AreaDasher + 1,
-  AreaToys is AreaDasher + 2.
+rule3([["Dasher",_,_,AreaDasher],[_,"Alabaster Snowball",_,AreaDasher + 1],[_,_,12,AreaDasher + 2]]).
+% rule3(Solution):-
+%   member(["Dasher",_,_,AreaDasher], Solution),
+%   member([_,"Alabaster Snowball",_,AreaDasher +1], Solution),
+%   member([_,_,12,AreaDasher + 2], Solution).
 
 %===========================================================
 % rule7: Returns true if all possible values where Alabaster has made
@@ -209,6 +208,8 @@ uniqueElf([[_,A1,_,_],[_,A2,_,_],[_,A3,_,_],[_,A4,_,_],[_,A5,_,_],[_,A6,_,_]]):-
 %   uniqueToys(Solution).
 
 solve:-
+    write('Area     Reindeer   Elf                    Toys'),nl,
+    write('-----    ---------  -------------     ---------'),nl,
     run(Solution),
     printResult(Solution).
 
@@ -216,20 +217,22 @@ run(Solution):-
   solutions(Solution),
   rule8(Solution),
   distributionToys(Solution),
+
+  % rule3(Solution)
+
   rule7(Solution),
   rule4(Solution),
   rule5(Solution),
   uniqueToys(Solution),
   distributionAreas(Solution),
+  rule3(Solution),
   rule6(Solution),
   rule2(Solution),
   rule1(Solution),
-  rule3(Solution),
+
   uniqueAreas(Solution).
 
 printResult(Solution):-
-    write('Area     Reindeer   Elf                    Toys'),nl,
-    write('-----    ---------  -------------     ---------'),nl,
     showResult(Solution, 1).
 showResult(Solution, Area):-
     member([Rein, Elf, NumToys, Area], Solution),
