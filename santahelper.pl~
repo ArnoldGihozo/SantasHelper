@@ -223,15 +223,15 @@ run(Solution):-
   solutions(Solution),
   rule8(Solution),
   distributionToys(Solution),
+  uniqueToys(Solution),
   rule7(Solution),
   rule4(Solution),
   rule5(Solution),
-  uniqueToys(Solution),
   distributionAreas(Solution),
   uniqueAreas(Solution),
+  rule3(Solution),
   rule6(Solution),
   rule1(Solution),
-  rule3(Solution),
   rule2(Solution).
 %======================================================================
 %showResult(Solution, Area)- formats the result gained.

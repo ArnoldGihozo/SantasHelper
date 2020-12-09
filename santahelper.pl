@@ -244,8 +244,6 @@ showResult(Solution, Area):-
     showResult(Solution, NewArea).
 showResult(_,7).
 
+%  To Run on Mac
+%  consult('/Users/arnoldgihozo/Documents/GitHub/SantasHelper/santahelper.pl').
 
-
-
-
-% consult('/Users/arnoldgihozo/Documents/GitHub/SantasHelper/santahelper.pl').
