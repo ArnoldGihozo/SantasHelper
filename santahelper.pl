@@ -105,25 +105,19 @@ checkArea(2).
 checkArea(3).
 checkArea(4).
 checkArea(5).
-%checkArea(5). 
+%checkArea(5).
 
 %===========================================================
-%rule3 :- Returns true for all possible vakues in which Dasher
+%rule3 :- Returns true for all possible values in which Dasher
 % Albaster, Snowball's Reindeer, and the rein deer of the elf that
 % made 12 toys.
 
-
-rule3([["Dasher",_,_,AreaDasher],[_,"Alabaster Snowball",_,AreaSnowBall],
-      [_,_,12,Area12]]).
-
-
-
-% rule3(Solution):-
-%   member(["Dasher",_,_,AreaDasher], Solution),
-%   member([_,"Alabaster Snowball",_,AreaSnowBall], Solution),
-%   member([_,_,12,Area12], Solution),
-%   AreaSnowBall is AreaDasher + 1,
-%   Area12 is AreaDasher + 2.
+ rule3(Solution):-
+   member(["Dasher",_,_,AreaDasher], Solution),
+   member([_,"Alabaster Snowball",_,AreaSnowBall], Solution),
+   member([_,_,12,Area12], Solution),
+   AreaSnowBall is AreaDasher + 1,
+   Area12 is AreaDasher + 2.
 
 %===========================================================
 % rule7: Returns true if all possible values where Alabaster has made
@@ -164,40 +158,44 @@ rule4(Solution):-
    ToysRudolf is NumberToys4 + 3,
    NumToyMin is NumToyMary + 3.
 
+%========================================================
+%rule6(Solution) - Returns true is Blitze is before Bushy Evergreen
+%
+%Solution - [[reindeer,elf, toys, area]..........]
 rule6(Solution):-
   member(["Blitzen",_,_,AreaBli], Solution),
   member([_,"Bushy Evergreen",_,AreaBushy], Solution),
   AreaBli < AreaBushy.
 
 %============================================================
-%uniqueness
+%noDuplicates(Solution) - returns true if there are no similar values
+%
+%
+%Solution - [[reindeer,elf, toys, area]..........]
 noDuplicates([]).
 noDuplicates([First | Rest]):-
     not(member(First, Rest)),
     noDuplicates(Rest).
 
+%====================================================================
+%uniqueToys(Solution) - returns true if the toys are uique.
+%
+%Solution - [[reindeer,elf, toys, area]..........]
 uniqueToys([[_,_,T1,_],[_,_,T2,_],[_,_,T3,_],[_,_,T4,_],[_,_,T5,_],[_,_,T6,_]]):-
     noDuplicates([T1,T2,T3,T4,T5,T6]).
 
-
+%====================================================================
+%uniqueAreas(Solution) - returns true if the areas are uique.
+%
+%Solution - [[reindeer,elf, toys, area]..........]
 uniqueAreas([[_,_,_,A1],[_,_,_,A2],[_,_,_,A3],[_,_,_,A4],[_,_,_,A5],[_,_,_,A6]]):-
     noDuplicates([A1,A2,A3,A4,A5,A6]).
-
-uniqueElf([[_,A1,_,_],[_,A2,_,_],[_,A3,_,_],[_,A4,_,_],[_,A5,_,_],[_,A6,_,_]]):-
-    noDuplicates([A1,A2,A3,A4,A5,A6]).
-
 
 
 %============================================================
 %solve - intiates the run of our program.
 %
-%retrieves solutions in the form of parameter X,
-%then runs list through the rules.
-% hey Arnold look at the rules below unique toys they need to be
-% optimized, Their not ordered in a way that would give rule 5
-% the best possibility of truth, maybe above toys also needs to be ordered
-% in a way
-%
+%retrieves solutions in the form of parameter Solutio,
 % solve(Solution):-
 %   solutions(Solution),
 %   %rule5a(Solution),
@@ -213,34 +211,32 @@ uniqueElf([[_,A1,_,_],[_,A2,_,_],[_,A3,_,_],[_,A4,_,_],[_,A5,_,_],[_,A6,_,_]]):-
 %   rule2(Solution),
 %   rule3(Solution),
 %   uniqueToys(Solution).
-
 solve:-
     write('Area     Reindeer   Elf                    Toys'),nl,
     write('-----    ---------  -------------     ---------'),nl,
     run(Solution),
-    printResult(Solution).
+    showResult(Solution, 1).
 
+%=================================================
+%run(Solution) - returns true if there is one unique solution
 run(Solution):-
   solutions(Solution),
   rule8(Solution),
   distributionToys(Solution),
-
-  % rule3(Solution)
-
+  uniqueToys(Solution),
   rule7(Solution),
   rule4(Solution),
   rule5(Solution),
-  uniqueToys(Solution),
   distributionAreas(Solution),
+  uniqueAreas(Solution),
   rule3(Solution),
   rule6(Solution),
-  rule2(Solution),
   rule1(Solution),
-
-  uniqueAreas(Solution).
-
-printResult(Solution):-
-    showResult(Solution, 1).
+  rule2(Solution).
+%======================================================================
+%showResult(Solution, Area)- formats the result gained.
+%
+%
 showResult(Solution, Area):-
     member([Rein, Elf, NumToys, Area], Solution),
     writef('%8l %10l %20l %5r ', [Area, Rein, Elf, NumToys]),nl,
